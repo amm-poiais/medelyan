@@ -8,7 +8,7 @@ class Question(models.Model):
 
     text = models.CharField(max_length=50)
     pub_date = models.DateTimeField('published')
-    multiple_choice = models.BooleanField()
+    multiple_choice = models.BooleanField(default=False)
 
     def __str__(self):
         return self.text
