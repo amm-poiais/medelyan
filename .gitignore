@@ -1,0 +1,4 @@
+.idea/
+venv/
+polls/__pycache__/
+task6/__pycache__/
