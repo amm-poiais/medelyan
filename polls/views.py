@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
-def index(request):
-    return HttpResponse('Hi there')
+def home(request):
+    return render(request, 'home.html')
+
+def poll_list(request):
+    return HttpResponse('[not implemented]')

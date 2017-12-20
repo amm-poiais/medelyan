@@ -8,6 +8,7 @@ class Question(models.Model):
 
     text = models.CharField(max_length=50)
     pub_date = models.DateTimeField('published')
+    multiple_choice = models.BooleanField()
 
     def __str__(self):
         return self.text
@@ -28,6 +29,9 @@ class UserQuestionAnswer(models.Model):
     # Need to check data uniqueness when user tries to vote - to prohibit multiply
     # votes on the same question (i.e. just check that the user hasn't voted for this question yet)
     # Thus, multiple choice is allowed in one vote request.
+
+    # for non-registered user there will be behind-the-scene registration of temporary
+    # user with user's ip as nick_name
 
     # who voted
     voter = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
