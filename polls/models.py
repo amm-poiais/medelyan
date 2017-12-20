@@ -2,21 +2,6 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 
-# class User(models.Model):
-#     # idk how to create a single unique constraint in django, but i do need
-#     # to have nick_name unique - hence primary_key=true
-#     # for non-registered users nick_name will probably equal to their ip
-#     nick_name = models.CharField(max_length=30, primary_key=True)
-#     first_name = models.CharField(max_length=30)
-#     last_name = models.CharField(max_length=30)
-#
-#     # this one is not good but let's pretend that it is super-encrypted password hash or somewhat like that;)
-#     password = models.CharField(max_length=30)
-#
-#     def __str__(self):
-#         return self.nick_name
-
-
 class Question(models.Model):
     # we really need to know who created the question
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
