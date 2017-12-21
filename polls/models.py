@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils import timezone
 
 
 class Question(models.Model):
@@ -33,12 +34,17 @@ class UserQuestionAnswer(models.Model):
     # for non-registered user there will be behind-the-scene registration of temporary
     # user with user's ip as nick_name
 
-    # who voted
-    voter = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    # who voted (registered user)
+    voter = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
+    # who voted (ip for non-registered users)
+    ip = models.CharField(max_length=15, null=True)
     # what was the question
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # what was the answer
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    # where was the answer given
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return '<not implemented>'
+        v = self.voter.__str__() if self.voter is not None else self.ip;
+        return '{}: {} - {}'.format(v, self.question.__str__(), self.answer.__str__())
