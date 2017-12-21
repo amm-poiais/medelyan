@@ -6,11 +6,8 @@
 </head>
 <body>
     <p><a href="{% url 'home' %}">Home</a></p>
-    {% if request.user.username %}
-        <p>Logged as: {{ request.user.username }}</p>
-    {% else %}
-        <p><i>Not logged in</i></p>
-    {% endif %}
+    {% load customtags %}
+    <p>{% current_user %}</p>
     {% block content %}
     {% endblock %}
 </body>
