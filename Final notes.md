@@ -2,7 +2,7 @@
 
 # Supported features:
 - user registration, logging in /out and signing up
-- creating polls (authorized users)'
+- creating polls (authorized users)
 - voting on polls (all users but with some restrictions to non-authorized ones)
 - looking at poll results
 
