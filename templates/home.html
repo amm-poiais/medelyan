@@ -3,10 +3,14 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    Menu:
-    <ul>
-        <a href="login">Login</a>
-        <a href="polls">View polls</a>
+    <ul type="none">
+        <p>Menu:</p>
+        {% if request.user.username %}
+            <li><a href="logout">Log out</a></li>
+        {% else %}
+            <li><a href="login">Login</a> / <a href="signup">Sign up</a></li>
+        {% endif %}
+        <li><a href="polls">View polls</a></li>
     </ul>
 
 {%  endblock %}

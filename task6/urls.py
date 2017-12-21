@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from polls import views as polls_views
+from .views import signup, home
 
 urlpatterns = [
+    path('signup/', signup, name='signup'),
     path('login/', auth_views.login, name='login'),
-    path('logout/', auth_views.logout, name='logout'),
+    path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
-    path('', polls_views.home, name='home'),
+    path('', home, name='home'),
 ]
