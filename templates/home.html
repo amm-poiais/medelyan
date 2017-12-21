@@ -5,7 +5,7 @@
 {% block content %}
     <ul type="none">
         <p>Menu:</p>
-        {% if request.user.username %}
+        {% if request.user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Log out</a></li>
         {% else %}
             <li><a href="{% url 'login' %}">Login</a> / <a href="signup">Sign up</a></li>

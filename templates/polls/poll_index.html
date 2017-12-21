@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <!-- Create poll link is available only for registered users -->
     {% if request.user.is_authenticated %}
     <a href="create_poll">Create poll</a>
     {% endif %}
@@ -9,7 +10,8 @@
         <ul>
             <p>Latest questions:</p>
             {% for q in latest_question_list %}
-                <li><i>(published on {{ q.pub_date }} by {{ q.author }})</i> <a href="{% url 'polls:view_question' q.id %}">{{ q.text }}</a></li>
+                <li><i>(published on {{ q.pub_date }} by {{ q.author }})</i>
+                    <a href="{% url 'polls:view_question' q.id %}">{{ q.text }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Viewing question{% endblock %}
+
+{% block content %}
+    {% if not question %}
+        <p>Sorry, there's no such a question.</p>
+    {% else %}
+        {% if question.multiple_choice %}
+            <!-- yep, multiple choice is not implented -->
+            <p>Not implemented</p>
+
+        {% else %}
+
+            <h2>{{ question.text }}</h2>
+            <form action="{% url 'polls:vote' question.id %}" method="post">
+                {% csrf_token %}
+            {% for a in question.answer_set.all %}
+                <input type="radio" name="answer" value="{{ a.id }}">{{ a.text }}<br>
+            {% endfor %}
+
+            <button type="submit" {% if already_voted %}disabled{% endif %}>Vote</button>
+
+            {% if already_voted %}
+                {% if request.user.is_authenticated %}
+                    <p style="color: red"><b>You already voted on this poll</b></p>
+                {% else %}
+                    <p style="color: red"><b>You already voted. It's allowed for
+                        non-registered users to vote twice in 15 seconds</b></p>
+                {% endif %}
+            {% endif %}
+            </form>
+
+            <br>
+            <a href="{% url 'polls:results' question.id %}">See results</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -19,7 +19,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=50)
 
-    # this one must be auto-calculated
+    # this one must be auto-calculated (see polls.views.vote method for details)
     votes = models.IntegerField('votes total', default=0)
 
     def __str__(self):
@@ -27,14 +27,12 @@ class Answer(models.Model):
 
 
 class UserQuestionAnswer(models.Model):
-    # Need to check data uniqueness when user tries to vote - to prohibit multiply
-    # votes on the same question (i.e. just check that the user hasn't voted for this question yet)
-    # Thus, multiple choice is allowed in one vote request.
+    # choice of registered users is remembered and stored in database
+    # choice of non-registered users is remembered and stored also, but
+    # their vote ability is limited to maximum of certain number per
+    # some amount of time (see polls.views.hasUserAlreadyVoted method for details
 
-    # for non-registered user there will be behind-the-scene registration of temporary
-    # user with user's ip as nick_name
-
-    # who voted (registered user)
+    # who voted (for registered users)
     voter = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     # who voted (ip for non-registered users)
     ip = models.CharField(max_length=15, null=True)
@@ -42,9 +40,9 @@ class UserQuestionAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     # what was the answer
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-    # where was the answer given
+    # where was the vote made
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        v = self.voter.__str__() if self.voter is not None else self.ip;
-        return '{}: {} - {}'.format(v, self.question.__str__(), self.answer.__str__())
+        voter_name = self.voter.__str__() if self.voter is not None else self.ip;
+        return '({}) {}: {} - {}'.format(self.date, voter_name, self.question.__str__(), self.answer.__str__())

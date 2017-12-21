@@ -7,8 +7,8 @@ from django.contrib.auth.models import Group
 def home(request):
     return render(request, 'home.html')
 
+
 def signup(request):
-    username = None
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -18,11 +18,13 @@ def signup(request):
 
             # automatic log in
             user = authenticate(username=username, password=password)
-            pollUsersGroup = Group.objects.get(name='Poll Users')
+            poll_users_group = Group.objects.get(name='Poll Users')
 
             # group registration (by default for all users of site)
-            user.groups.add(pollUsersGroup)
-            pollUsersGroup.user_set.add(user)
+            # still not sure how this works;) - need more exploration
+            # probably redundant
+            user.groups.add(poll_users_group)
+            poll_users_group.user_set.add(user)
             login(request, user)
 
             # go to home page
@@ -30,4 +32,3 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
-
