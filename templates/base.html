@@ -5,10 +5,11 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    <p><a href="{% url 'home' %}">Home</a></p>
     {% if request.user.username %}
         <p>Logged as: {{ request.user.username }}</p>
     {% else %}
-        <p><i>Not logged</i></p>
+        <p><i>Not logged in</i></p>
     {% endif %}
     {% block content %}
     {% endblock %}

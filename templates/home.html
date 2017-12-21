@@ -6,11 +6,11 @@
     <ul type="none">
         <p>Menu:</p>
         {% if request.user.username %}
-            <li><a href="logout">Log out</a></li>
+            <li><a href="{% url 'logout' %}">Log out</a></li>
         {% else %}
-            <li><a href="login">Login</a> / <a href="signup">Sign up</a></li>
+            <li><a href="{% url 'login' %}">Login</a> / <a href="signup">Sign up</a></li>
         {% endif %}
-        <li><a href="polls">View polls</a></li>
+        <li><a href="{% url 'polls:poll_index' %}">View polls</a></li>
     </ul>
 
 {%  endblock %}

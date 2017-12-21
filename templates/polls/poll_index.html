@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="create_poll">Create poll</a>
+
+    {% if latest_question_list %}
+        <ul>
+            <p>Latest questions:</p>
+            {% for q in latest_question_list %}
+                <li><i>(published on {{ q.pub_date }} by {{ q.author }})</i> <a href="{{ q.id }}">{{ q.text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls available</p>
+    {% endif %}
+{% endblock %}
