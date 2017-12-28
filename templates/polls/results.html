@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block content %}
+    {% if not question %}
+        <p>Sorry, question was not specified</p>
+    {% else %}
+        <h2>{{ question.text }} ({{ votes_total }} votes total)</h2>
+        <ul>
+        {% for a in question.answer_set.all %}
+            <li>({{ a.votes }} votes,
+                {% if votes_total != 0 %}{{ a.votes|div:votes_total }}
+                {% else %} 0
+                {% endif %}%) {{ a.text }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

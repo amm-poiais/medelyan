@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <ul type="none">
+        <p>Menu:</p>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Log out</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a> / <a href="signup">Sign up</a></li>
+        {% endif %}
+        <li><a href="{% url 'polls:poll_index' %}">View polls</a></li>
+    </ul>
+
+{%  endblock %}
